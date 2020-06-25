@@ -7,19 +7,19 @@
   
   <title>house price | lupanpan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="房价预测是大家都很熟悉的一个话题和比赛了，这是我在kaggle上的第一个比赛。比赛的目的是检测和巩固自己的学习水平，由于时间有限，没有融合太多的trick，但比赛的基本方法和思路是有的，接下来计划做几场从低级到顶级的比赛。参加house prices的team是4486支，我的排名是702.  接下来记录一下自己用的方法和感想。 首先是要对数据有一个非常清楚的认识，利用pandas读取数据后，可以">
+  <meta name="description" content="房价预测是大家都很熟悉的一个话题和比赛了，这是我在kaggle上的第一个比赛。比赛的目的是检测和巩固自己的学习水平，由于时间有限，没有融合太多的trick，但比赛的基本方法和思路是有的，参加house prices的team是4486支，我的排名是702.  接下来记录一下自己用的方法和感想。 首先是要对数据有一个非常清楚的认识，利用pandas读取数据后，可以用head方法先显示出前五行（或用t">
 <meta name="keywords" content="kaggle house price">
 <meta property="og:type" content="article">
 <meta property="og:title" content="house price">
 <meta property="og:url" content="http://yoursite.com/2020/04/18/house-price/index.html">
 <meta property="og:site_name" content="lupanpan">
-<meta property="og:description" content="房价预测是大家都很熟悉的一个话题和比赛了，这是我在kaggle上的第一个比赛。比赛的目的是检测和巩固自己的学习水平，由于时间有限，没有融合太多的trick，但比赛的基本方法和思路是有的，接下来计划做几场从低级到顶级的比赛。参加house prices的team是4486支，我的排名是702.  接下来记录一下自己用的方法和感想。 首先是要对数据有一个非常清楚的认识，利用pandas读取数据后，可以">
+<meta property="og:description" content="房价预测是大家都很熟悉的一个话题和比赛了，这是我在kaggle上的第一个比赛。比赛的目的是检测和巩固自己的学习水平，由于时间有限，没有融合太多的trick，但比赛的基本方法和思路是有的，参加house prices的team是4486支，我的排名是702.  接下来记录一下自己用的方法和感想。 首先是要对数据有一个非常清楚的认识，利用pandas读取数据后，可以用head方法先显示出前五行（或用t">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://i.loli.net/2020/04/18/TBKdbag35zmGRSv.png">
-<meta property="og:updated_time" content="2020-04-23T09:22:44.005Z">
+<meta property="og:updated_time" content="2020-06-25T13:00:47.192Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="house price">
-<meta name="twitter:description" content="房价预测是大家都很熟悉的一个话题和比赛了，这是我在kaggle上的第一个比赛。比赛的目的是检测和巩固自己的学习水平，由于时间有限，没有融合太多的trick，但比赛的基本方法和思路是有的，接下来计划做几场从低级到顶级的比赛。参加house prices的team是4486支，我的排名是702.  接下来记录一下自己用的方法和感想。 首先是要对数据有一个非常清楚的认识，利用pandas读取数据后，可以">
+<meta name="twitter:description" content="房价预测是大家都很熟悉的一个话题和比赛了，这是我在kaggle上的第一个比赛。比赛的目的是检测和巩固自己的学习水平，由于时间有限，没有融合太多的trick，但比赛的基本方法和思路是有的，参加house prices的team是4486支，我的排名是702.  接下来记录一下自己用的方法和感想。 首先是要对数据有一个非常清楚的认识，利用pandas读取数据后，可以用head方法先显示出前五行（或用t">
 <meta name="twitter:image" content="https://i.loli.net/2020/04/18/TBKdbag35zmGRSv.png">
   
     <link rel="alternate" href="/atom.xml" title="lupanpan" type="application/atom+xml">
@@ -89,7 +89,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>房价预测是大家都很熟悉的一个话题和比赛了，这是我在kaggle上的第一个比赛。比赛的目的是检测和巩固自己的学习水平，由于时间有限，没有融合太多的trick，但比赛的基本方法和思路是有的，接下来计划做几场从低级到顶级的比赛。参加house prices的team是4486支，我的排名是702.</p>
+        <p>房价预测是大家都很熟悉的一个话题和比赛了，这是我在kaggle上的第一个比赛。比赛的目的是检测和巩固自己的学习水平，由于时间有限，没有融合太多的trick，但比赛的基本方法和思路是有的，参加house prices的team是4486支，我的排名是702.</p>
 <p><img src="https://i.loli.net/2020/04/18/TBKdbag35zmGRSv.png" alt="result"></p>
 <p>接下来记录一下自己用的方法和感想。</p>
 <p>首先是要对数据有一个非常清楚的认识，利用pandas读取数据后，可以用head方法先显示出前五行（或用tail方法显示后五行），整体上看一看数据的格式都有哪一些，比如：字符串，空值，零值，这些都是要处理的，方便模型的优化。这里有一个利器工具可以使用：<strong>数据探索性分析pandas_profiling</strong>里有一个ProfileReport方法，可以对数据有个总体的认识，比如：某一列的缺失率，零所占比率，包括看Pearson系数。一些其他的工具也可以使用，seaborn里的boxplot画箱型图看离群点；以及用matplotlib.pyplot里的scatter来看是否存在线性关系，是否该删除一些数据。</p>
@@ -102,7 +102,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/18/house-price/" data-id="ck9ck6zu70002kco000ao9jrx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/18/house-price/" data-id="ckbut7ks20000a0o0so0la02g" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kaggle-house-price/">kaggle house price</a></li></ul>
