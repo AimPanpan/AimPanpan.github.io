@@ -63,10 +63,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-offer2" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-offer3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/06/26/offer2/" class="article-date">
-  <time datetime="2020-06-26T11:55:56.000Z" itemprop="datePublished">2020-06-26</time>
+    <a href="/2020/05/27/offer3/" class="article-date">
+  <time datetime="2020-05-27T08:57:21.000Z" itemprop="datePublished">2020-05-27</time>
 </a>
     
   </div>
@@ -77,7 +77,51 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/26/offer2/">offer2</a>
+      <a class="article-title" href="/2020/05/27/offer3/">offer3</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>题目：从尾到头打印链表</p>
+<p>题目描述：输入一个链表，按链表从尾到头的顺序返回一个ArrayList。</p>
+<p>分析：遍历链表的顺序是从头到尾，输出的是从尾到头，可以用栈来实现，每次经过一个节点时，把该节点放入一个栈中，遍历完整个链表后，再从栈顶开始依次输出节点的值。</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"><span class="comment">//先定义链表</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListNode</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    ListNode next = <span class="keyword">null</span>;</span><br><span class="line">    ListNode(<span class="keyword">int</span> value)&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;    </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">printListFromTailToHead</span><span class="params">(ListNode listNode)</span></span>&#123;</span><br><span class="line">        Stack&lt;Integer&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span>(listNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">            stack.push(listNode.val);</span><br><span class="line">            listNode = listNode.next;</span><br><span class="line">        &#125;</span><br><span class="line">        ArrayList&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span>(!stack.isEmpty())&#123;</span><br><span class="line">            list.add(stack.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/05/27/offer3/" data-id="ckbyy19h500022so0m3sol7ll" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer-java代码/">剑指offer java代码</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-offer2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/05/26/offer2/" class="article-date">
+  <time datetime="2020-05-26T11:55:56.000Z" itemprop="datePublished">2020-05-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/26/offer2/">offer2</a>
     </h1>
   
 
@@ -95,7 +139,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/06/26/offer2/" data-id="ckbw8kmud000594o04ov55m4r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/05/26/offer2/" data-id="ckbyy19ii000b2so0yvpe3uya" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer-java代码/">剑指offer java代码</a></li></ul>
@@ -139,7 +183,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/05/25/offer1/" data-id="ckbw8kmu8000394o0mwa9wc4g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/05/25/offer1/" data-id="ckbyy19he00052so0st2l3xw4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer-java代码/">剑指offer java代码</a></li></ul>
@@ -186,7 +230,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/18/house-price/" data-id="ckbw8kmu6000294o085u3y394" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/18/house-price/" data-id="ckbyy19h900032so03jloa4rr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kaggle-house-price/">kaggle house price</a></li></ul>
@@ -198,9 +242,9 @@
 
 
   
-    <article id="post-article" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-about" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/08/10/article/" class="article-date">
+    <a href="/2019/08/10/about/" class="article-date">
   <time datetime="2019-08-10T06:43:30.000Z" itemprop="datePublished">2019-08-10</time>
 </a>
     
@@ -212,7 +256,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/10/article/">about me</a>
+      <a class="article-title" href="/2019/08/10/about/">about me</a>
     </h1>
   
 
@@ -224,7 +268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/10/article/" data-id="ckbw8kmtu000094o0qr1pwa2a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/10/about/" data-id="ckbyy19gn00002so0fqdg9ms7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -273,7 +317,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/09/hello-world/" data-id="ckbw8kmu3000194o05ul1nj39" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/09/hello-world/" data-id="ckbyy19h300012so0rsh88nje" class="article-share-link">Share</a>
       
       
     </footer>
@@ -315,7 +359,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
     </div>
   </div>
 
@@ -328,7 +372,11 @@
       <ul>
         
           <li>
-            <a href="/2020/06/26/offer2/">offer2</a>
+            <a href="/2020/05/27/offer3/">offer3</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/26/offer2/">offer2</a>
           </li>
         
           <li>
@@ -340,11 +388,7 @@
           </li>
         
           <li>
-            <a href="/2019/08/10/article/">about me</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/09/hello-world/">Hello World</a>
+            <a href="/2019/08/10/about/">about me</a>
           </li>
         
       </ul>
