@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>nms | lupanpan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="NMS（非极大值抑制） 目标检测中常用的后处理方法，用于除去重叠率较高的预测框 先说一下过程，根据检测出来的scores排序，选择最大的一个作为基准； 拿基准与剩余的框做iou，删除大于阈值的框（重复率较高）； 选择第二个scores大的框作为基准（很可能是别的物体），重复上面的步骤，根据阈值删除一些框。 1234567891011121314151617181920212223242526272">
+<meta name="keywords" content="object detection python code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nms">
+<meta property="og:url" content="http://yoursite.com/2020/07/27/nms/index.html">
+<meta property="og:site_name" content="lupanpan">
+<meta property="og:description" content="NMS（非极大值抑制） 目标检测中常用的后处理方法，用于除去重叠率较高的预测框 先说一下过程，根据检测出来的scores排序，选择最大的一个作为基准； 拿基准与剩余的框做iou，删除大于阈值的框（重复率较高）； 选择第二个scores大的框作为基准（很可能是别的物体），重复上面的步骤，根据阈值删除一些框。 1234567891011121314151617181920212223242526272">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-07-27T06:23:16.451Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nms">
+<meta name="twitter:description" content="NMS（非极大值抑制） 目标检测中常用的后处理方法，用于除去重叠率较高的预测框 先说一下过程，根据检测出来的scores排序，选择最大的一个作为基准； 拿基准与剩余的框做iou，删除大于阈值的框（重复率较高）； 选择第二个scores大的框作为基准（很可能是别的物体），重复上面的步骤，根据阈值删除一些框。 1234567891011121314151617181920212223242526272">
+  
+    <link rel="alternate" href="/atom.xml" title="lupanpan" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">lupanpan</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-nms" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/27/nms/" class="article-date">
+  <time datetime="2020-07-27T06:21:14.000Z" itemprop="datePublished">2020-07-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      nms
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>NMS（非极大值抑制）</p>
+<p>目标检测中常用的后处理方法，用于除去重叠率较高的预测框</p>
+<p>先说一下过程，根据检测出来的scores排序，选择最大的一个作为基准；</p>
+<p>拿基准与剩余的框做iou，删除大于阈值的框（重复率较高）；</p>
+<p>选择第二个scores大的框作为基准（很可能是别的物体），重复上面的步骤，根据阈值删除一些框。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nms</span><span class="params">(dets, threshold)</span>:</span></span><br><span class="line">    x1 = dets[:,<span class="number">0</span>]</span><br><span class="line">    y1 = dets[:,<span class="number">1</span>]</span><br><span class="line">    x2 = dets[:,<span class="number">2</span>]</span><br><span class="line">    y2 = dets[:,<span class="number">3</span>]</span><br><span class="line">    scores = dets[:,<span class="number">4</span>]</span><br><span class="line">    area = (x2 - x1) * (y2 -y1)</span><br><span class="line">    <span class="comment"># 按scores排序，argsort升序，[：：-1]倒过来就是降序了，从大到小</span></span><br><span class="line">    index = scores.argsort()[::<span class="number">-1</span>]</span><br><span class="line">    <span class="comment"># 用来存放nms后的结果，但是存取的是scores的索引</span></span><br><span class="line">    keep = []</span><br><span class="line">    <span class="keyword">while</span> index.size &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="comment"># 取第一scores大的框对应的索引</span></span><br><span class="line">        i = index[<span class="number">0</span>]</span><br><span class="line">        keep.append(i)</span><br><span class="line">        xx1 = np.maximum(x1[i], x1[index[<span class="number">1</span>:]])</span><br><span class="line">        yy1 = np.maximum(y1[i], y1[index[<span class="number">1</span>:]])</span><br><span class="line">        xx2 = np.minimum(x2[i], x2[index[<span class="number">1</span>:]])</span><br><span class="line">        yy2 = np.minimum(y2[i], y2[index[<span class="number">1</span>:]])</span><br><span class="line">        w = np.maximum(xx2 - xx1, <span class="number">0</span>)</span><br><span class="line">        h = np.maximum(yy2 - yy1, <span class="number">0</span>)</span><br><span class="line">        inters = w * h</span><br><span class="line">        union = area[i]+area[index[<span class="number">1</span>:]]</span><br><span class="line">        overlap = inters / union-inters</span><br><span class="line">        inds = np.where(overlap &lt;= threshold)[<span class="number">0</span>]</span><br><span class="line">        index = index[inds+<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> keep</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/27/nms/" data-id="ckd4j39dw000iqso01ny6s4vp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/object-detection-python-code/">object detection python code</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/27/ATSS/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ATSS</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/kaggle-house-price/">kaggle house price</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/object-detection/">object detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/object-detection-python-code/">object detection python code</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer-java-code/">剑指offer java code</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/kaggle-house-price/" style="font-size: 10px;">kaggle house price</a> <a href="/tags/object-detection/" style="font-size: 10px;">object detection</a> <a href="/tags/object-detection-python-code/" style="font-size: 15px;">object detection python code</a> <a href="/tags/剑指offer-java-code/" style="font-size: 20px;">剑指offer java code</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/27/nms/">nms</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/27/ATSS/">ATSS</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/28/about/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/03/iou/">iou</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/27/offer3/">offer3</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 lupanpan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
