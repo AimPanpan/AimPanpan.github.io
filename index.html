@@ -63,6 +63,83 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-about" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/28/about/" class="article-date">
+  <time datetime="2020-06-28T10:52:00.076Z" itemprop="datePublished">2020-06-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="lupanpan"><a href="#lupanpan" class="headerlink" title="lupanpan"></a><strong>lupanpan</strong></h4><h5 id="I-am-a-master-of-Ocean-university-of-China-I-major-in-computer-vision-I-am-deeply-interested-in-machine-learning-and-deep-learning-Particularly-object-detection-is-my-favorite-I-am-eager-to-communicate-with-the-seniors"><a href="#I-am-a-master-of-Ocean-university-of-China-I-major-in-computer-vision-I-am-deeply-interested-in-machine-learning-and-deep-learning-Particularly-object-detection-is-my-favorite-I-am-eager-to-communicate-with-the-seniors" class="headerlink" title="I am a master of Ocean university of China. I major in computer vision. I am deeply interested in machine learning and deep learning.  Particularly, object detection is my favorite. I am eager to communicate with the seniors."></a>I am a master of Ocean university of China. I major in computer vision. I am deeply interested in machine learning and deep learning.  Particularly, object detection is my favorite. I am eager to communicate with the seniors.</h5>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/28/about/" data-id="ckd43ry9600009co0qgnvyhi7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-object-detection" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/03/object-detection/" class="article-date">
+  <time datetime="2020-06-03T11:30:41.000Z" itemprop="datePublished">2020-06-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/03/object-detection/">object detection</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近准备面试秋招了，自己总结了有关目标检测的一些内容，记录下来，方便后期查看。</p>
+<p>IoU（Intersection over Union）重叠度/交并比</p>
+<p>在目标检测中IoU可以理解为pred bbox和gt bbox的交集的面积/两者并集的面积。</p>
+<p>python代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_IoU</span><span class="params">(pred_bbox, gt_bbox)</span>:</span></span><br><span class="line">    <span class="comment"># xmin ymin xmax ymax 指交集的框的左上角和右下角</span></span><br><span class="line">    <span class="comment">#[0,1] [2,3]指框的左上角和右下角</span></span><br><span class="line">    xmin = np.maximum(pred_bbox[<span class="number">0</span>], gt_bbox[<span class="number">0</span>])</span><br><span class="line">    ymin = np.maximum(pred_bbox[<span class="number">1</span>], gt_bbox[<span class="number">1</span>])</span><br><span class="line">    xmax = np.minimum(pred_bbox[<span class="number">2</span>], gt_bbox[<span class="number">2</span>])</span><br><span class="line">    ymax = np.minimum(pred_bbox[<span class="number">3</span>], gt_bbox[<span class="number">3</span>])</span><br><span class="line">    <span class="comment">#得到坐标后计算出交集的宽和长</span></span><br><span class="line">    w = np.maximum(<span class="number">0</span>, xmax - xmin)</span><br><span class="line">    h = np.maximum(<span class="number">0</span>, ymax - ymin)</span><br><span class="line">    inters = w * h</span><br><span class="line">    <span class="comment">#并集的面积是两个框的和减去交集</span></span><br><span class="line">    union = （pred_bbox[<span class="number">3</span>] - pred_bbox[<span class="number">1</span>]）* (pred_bbox[<span class="number">2</span>] - pred_bbox[<span class="number">0</span>]) + (gt_bbox[<span class="number">3</span>] -     gt_bbox[<span class="number">1</span>]) * (gt_bbox[<span class="number">2</span>] - gt_bbox[<span class="number">0</span>]) - inters</span><br><span class="line">    <span class="comment">#交集/并集</span></span><br><span class="line">    overlaps = inters / union</span><br></pre></td></tr></table></figure>
+
+<p>NMS（非极大值抑制）</p>
+<p>目标检测中常用的后处理方法，用于除去重叠率较高的预测框</p>
+<p>先说一下过程，根据检测出来的scores排序，选择最大的一个作为基准；</p>
+<p>拿基准与剩余的框做iou，删除大于阈值的框（重复率较高）；</p>
+<p>选择第二个scores大的框作为基准（很可能是别的物体），重复上面的步骤，根据阈值删除一些框。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nms</span><span class="params">(dets, threshold)</span>:</span></span><br><span class="line">    x1 = dets[:,<span class="number">0</span>]</span><br><span class="line">    y1 = dets[:,<span class="number">1</span>]</span><br><span class="line">    x2 = dets[:,<span class="number">2</span>]</span><br><span class="line">    y2 = dets[:,<span class="number">3</span>]</span><br><span class="line">    scores = dets[:,<span class="number">4</span>]</span><br><span class="line">    area = (x2 - x1) * (y2 -y1)</span><br><span class="line">    <span class="comment"># 按scores排序，argsort升序，[：：-1]倒过来就是降序了，从大到小</span></span><br><span class="line">    index = scores.argsort()[::<span class="number">-1</span>]</span><br><span class="line">    <span class="comment"># 用来存放nms后的结果，但是存取的是scores的索引</span></span><br><span class="line">    keep = []</span><br><span class="line">    <span class="keyword">while</span> index.size &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="comment"># 取第一scores大的框对应的索引</span></span><br><span class="line">        i = index[<span class="number">0</span>]</span><br><span class="line">        keep.append(i)</span><br><span class="line">        xx1 = np.maximum(x1[i], x1[index[<span class="number">1</span>:]])</span><br><span class="line">        yy1 = np.maximum(y1[i], y1[index[<span class="number">1</span>:]])</span><br><span class="line">        xx2 = np.minimum(x2[i], x2[index[<span class="number">1</span>:]])</span><br><span class="line">        yy2 = np.minimum(y2[i], y2[index[<span class="number">1</span>:]])</span><br><span class="line">        w = np.maximum(xx2 - xx1, <span class="number">0</span>)</span><br><span class="line">        h = np.maximum(yy2 - yy1, <span class="number">0</span>)</span><br><span class="line">        inters = w * h</span><br><span class="line">        union = area[i]+area[index[<span class="number">1</span>:]]</span><br><span class="line">        overlap = inters / union-inters</span><br><span class="line">        inds = np.where(overlap &lt;= threshold)[<span class="number">0</span>]</span><br><span class="line">        index = index[inds+<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> keep</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/03/object-detection/" data-id="ckd43ry9l00029co0x17a84b3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/object-detection-python-code/">object detection python code</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-offer3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/05/27/offer3/" class="article-date">
@@ -95,10 +172,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/05/27/offer3/" data-id="ckbyyb95e0004vko0jnxuiu2b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/05/27/offer3/" data-id="ckd43ryaq000b9co0jctimyyc" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer-java代码/">剑指offer java代码</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer-java-code/">剑指offer java code</a></li></ul>
 
     </footer>
   </div>
@@ -139,10 +216,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/05/26/offer2/" data-id="ckbyyb95a0002vko07h3xb6ax" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/05/26/offer2/" data-id="ckd43ryec000d9co0bh3bh4c8" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer-java代码/">剑指offer java代码</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer-java-code/">剑指offer java code</a></li></ul>
 
     </footer>
   </div>
@@ -183,10 +260,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/05/25/offer1/" data-id="ckbyyb9570001vko0bzfdjykz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/05/25/offer1/" data-id="ckd43ryad00089co0375st5e2" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer-java代码/">剑指offer java代码</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer-java-code/">剑指offer java code</a></li></ul>
 
     </footer>
   </div>
@@ -230,39 +307,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/18/house-price/" data-id="ckbyyb964000avko079b52sw5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/18/house-price/" data-id="ckd43ry9n00039co0ynpumwsu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kaggle-house-price/">kaggle house price</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-about" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/08/10/about/" class="article-date">
-  <time datetime="2019-08-10T06:43:30.797Z" itemprop="datePublished">2019-08-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<hr>
-<h4 id="lupanpan"><a href="#lupanpan" class="headerlink" title="lupanpan"></a><em>lupanpan</em></h4><h5 id="I-am-a-master-of-Ocean-university-of-China-I-major-in-computer-vision-I-am-deeply-interested-in-machine-learning-and-deep-learning"><a href="#I-am-a-master-of-Ocean-university-of-China-I-major-in-computer-vision-I-am-deeply-interested-in-machine-learning-and-deep-learning" class="headerlink" title="I am a master of Ocean university of China. I major in computer vision. I am deeply interested in machine learning and deep learning."></a>I am a master of Ocean university of China. I major in computer vision. I am deeply interested in machine learning and deep learning.</h5>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/10/about/" data-id="ckbyyb94x0000vko078ed3l4k" class="article-share-link">Share</a>
-      
-      
     </footer>
   </div>
   
@@ -309,7 +358,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/09/hello-world/" data-id="ckbyyb966000bvko04oh450n8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/09/hello-world/" data-id="ckd43ry9d00019co0tjvtumq9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -332,7 +381,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/kaggle-house-price/">kaggle house price</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer-java代码/">剑指offer java代码</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/kaggle-house-price/">kaggle house price</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/object-detection-python-code/">object detection python code</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer-java-code/">剑指offer java code</a></li></ul>
     </div>
   </div>
 
@@ -342,7 +391,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/kaggle-house-price/" style="font-size: 10px;">kaggle house price</a> <a href="/tags/剑指offer-java代码/" style="font-size: 20px;">剑指offer java代码</a>
+      <a href="/tags/kaggle-house-price/" style="font-size: 10px;">kaggle house price</a> <a href="/tags/object-detection-python-code/" style="font-size: 10px;">object detection python code</a> <a href="/tags/剑指offer-java-code/" style="font-size: 20px;">剑指offer java code</a>
     </div>
   </div>
 
@@ -351,7 +400,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
     </div>
   </div>
 
@@ -364,6 +413,14 @@
       <ul>
         
           <li>
+            <a href="/2020/06/28/about/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/03/object-detection/">object detection</a>
+          </li>
+        
+          <li>
             <a href="/2020/05/27/offer3/">offer3</a>
           </li>
         
@@ -373,14 +430,6 @@
         
           <li>
             <a href="/2020/05/25/offer1/">offer1</a>
-          </li>
-        
-          <li>
-            <a href="/2020/04/18/house-price/">house price</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/10/about/">(no title)</a>
           </li>
         
       </ul>
