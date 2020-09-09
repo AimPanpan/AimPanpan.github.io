@@ -5,20 +5,20 @@
   
 
   
-  <title>iou | lupanpan</title>
+  <title>lupanpan | lupanpan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近准备面试秋招了，自己总结了有关目标检测的一些内容，记录下来，方便后期查看。 IoU（Intersection over Union）重叠度/交并比 在目标检测中IoU可以理解为pred bbox和gt bbox的交集的面积/两者并集的面积。 python代码 12345678910111213141516import numpy as npdef get_IoU(pred_bbox, gt_b">
-<meta name="keywords" content="object detection python code">
+  <meta name="description" content="I am a master of Ocean university of China. I major in computer vision. I am deeply interested in machine learning and deep learning.  Particularly, object detection is my favorite. I am eager to comm">
+<meta name="keywords" content="AI machine learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iou">
-<meta property="og:url" content="http://yoursite.com/2020/06/03/iou/index.html">
+<meta property="og:title" content="lupanpan">
+<meta property="og:url" content="http://yoursite.com/2020/08/01/about-me/index.html">
 <meta property="og:site_name" content="lupanpan">
-<meta property="og:description" content="最近准备面试秋招了，自己总结了有关目标检测的一些内容，记录下来，方便后期查看。 IoU（Intersection over Union）重叠度/交并比 在目标检测中IoU可以理解为pred bbox和gt bbox的交集的面积/两者并集的面积。 python代码 12345678910111213141516import numpy as npdef get_IoU(pred_bbox, gt_b">
+<meta property="og:description" content="I am a master of Ocean university of China. I major in computer vision. I am deeply interested in machine learning and deep learning.  Particularly, object detection is my favorite. I am eager to comm">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-07-27T06:23:11.614Z">
+<meta property="og:updated_time" content="2020-09-09T03:11:41.058Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iou">
-<meta name="twitter:description" content="最近准备面试秋招了，自己总结了有关目标检测的一些内容，记录下来，方便后期查看。 IoU（Intersection over Union）重叠度/交并比 在目标检测中IoU可以理解为pred bbox和gt bbox的交集的面积/两者并集的面积。 python代码 12345678910111213141516import numpy as npdef get_IoU(pred_bbox, gt_b">
+<meta name="twitter:title" content="lupanpan">
+<meta name="twitter:description" content="I am a master of Ocean university of China. I major in computer vision. I am deeply interested in machine learning and deep learning.  Particularly, object detection is my favorite. I am eager to comm">
   
     <link rel="alternate" href="/atom.xml" title="lupanpan" type="application/atom+xml">
   
@@ -65,10 +65,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-iou" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-about-me" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/06/03/iou/" class="article-date">
-  <time datetime="2020-06-03T11:30:41.000Z" itemprop="datePublished">2020-06-03</time>
+    <a href="/2020/08/01/about-me/" class="article-date">
+  <time datetime="2020-08-01T03:08:47.000Z" itemprop="datePublished">2020-08-01</time>
 </a>
     
   </div>
@@ -79,7 +79,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      iou
+      lupanpan
     </h1>
   
 
@@ -87,40 +87,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近准备面试秋招了，自己总结了有关目标检测的一些内容，记录下来，方便后期查看。</p>
-<p>IoU（Intersection over Union）重叠度/交并比</p>
-<p>在目标检测中IoU可以理解为pred bbox和gt bbox的交集的面积/两者并集的面积。</p>
-<p>python代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_IoU</span><span class="params">(pred_bbox, gt_bbox)</span>:</span></span><br><span class="line">    <span class="comment"># xmin ymin xmax ymax 指交集的框的左上角和右下角</span></span><br><span class="line">    <span class="comment">#[0,1] [2,3]指框的左上角和右下角</span></span><br><span class="line">    xmin = np.maximum(pred_bbox[<span class="number">0</span>], gt_bbox[<span class="number">0</span>])</span><br><span class="line">    ymin = np.maximum(pred_bbox[<span class="number">1</span>], gt_bbox[<span class="number">1</span>])</span><br><span class="line">    xmax = np.minimum(pred_bbox[<span class="number">2</span>], gt_bbox[<span class="number">2</span>])</span><br><span class="line">    ymax = np.minimum(pred_bbox[<span class="number">3</span>], gt_bbox[<span class="number">3</span>])</span><br><span class="line">    <span class="comment">#得到坐标后计算出交集的宽和长</span></span><br><span class="line">    w = np.maximum(<span class="number">0</span>, xmax - xmin)</span><br><span class="line">    h = np.maximum(<span class="number">0</span>, ymax - ymin)</span><br><span class="line">    inters = w * h</span><br><span class="line">    <span class="comment">#并集的面积是两个框的和减去交集</span></span><br><span class="line">    union = （pred_bbox[<span class="number">3</span>] - pred_bbox[<span class="number">1</span>]）* (pred_bbox[<span class="number">2</span>] - pred_bbox[<span class="number">0</span>]) + (gt_bbox[<span class="number">3</span>] -     gt_bbox[<span class="number">1</span>]) * (gt_bbox[<span class="number">2</span>] - gt_bbox[<span class="number">0</span>]) - inters</span><br><span class="line">    <span class="comment">#交集/并集</span></span><br><span class="line">    overlaps = inters / union</span><br></pre></td></tr></table></figure>
-
-
+        <h5 id="I-am-a-master-of-Ocean-university-of-China-I-major-in-computer-vision-I-am-deeply-interested-in-machine-learning-and-deep-learning-Particularly-object-detection-is-my-favorite-I-am-eager-to-communicate-with-the-seniors"><a href="#I-am-a-master-of-Ocean-university-of-China-I-major-in-computer-vision-I-am-deeply-interested-in-machine-learning-and-deep-learning-Particularly-object-detection-is-my-favorite-I-am-eager-to-communicate-with-the-seniors" class="headerlink" title="I am a master of Ocean university of China. I major in computer vision. I am deeply interested in machine learning and deep learning.  Particularly, object detection is my favorite. I am eager to communicate with the seniors."></a>I am a master of Ocean university of China. I major in computer vision. I am deeply interested in machine learning and deep learning.  Particularly, object detection is my favorite. I am eager to communicate with the seniors.</h5>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/06/03/iou/" data-id="ckeut4jg900063co0f4jv2ggp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/08/01/about-me/" data-id="ckeut4jf200003co0jrq8k51t" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/object-detection-python-code/">object detection python code</a></li></ul>
-
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2020/07/27/ATSS/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          ATSS
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/27/offer3/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/07/27/nms/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">offer3</div>
+      <div class="article-nav-title">nms</div>
     </a>
   
 </nav>
